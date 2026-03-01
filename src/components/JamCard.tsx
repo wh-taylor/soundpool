@@ -75,7 +75,7 @@ export function JamCard({ user, compatibility }: JamCardProps) {
           <span key={g} className="tag tag--genre">{g}</span>
         ))}
       </div>
-      {compatibility != -1 && <span key={compatibility} className="compatibility">{(100 * compatibility).toFixed(1)}% MATCH</span>}
+      {compatibility != -1 && <span key={compatibility} className="compatibility">{(100 * Math.cbrt(compatibility)).toFixed(1)}% MATCH</span>}
     </article>
   );
 }

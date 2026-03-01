@@ -24,7 +24,7 @@ export function JamsPage() {
   const allArtists = useMemo(() => [...new Set(users.flatMap(u => u.favoriteArtists))], [users]);
 
   const filtered = useMemo(() => {
-    let list = users.filter((u) => u.jamEntry?.visible && u != currentUser!);
+    let list = users.filter((u) => u.jamEntry?.visible);
     if (locationFilter) list = list.filter((u) => u.location === locationFilter);
     if (genreFilters.length > 0) {
       list = list.filter((u) =>
@@ -106,7 +106,7 @@ export function JamsPage() {
       ) : (
         <div className="jams-page__grid">
           {filtered.map((u) => (
-            <JamCard key={u.id} user={u} compatibility={getSimilarity(currentUser!, u, genreSimilarity, artistSimilarity, allArtists)} />
+            <JamCard key={u.id} user={u} compatibility={u == currentUser ? -1 : getSimilarity(currentUser!, u, genreSimilarity, artistSimilarity, allArtists)} />
           ))}
         </div>
       )}

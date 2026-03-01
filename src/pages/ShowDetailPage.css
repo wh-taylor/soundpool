@@ -1,4 +1,4 @@
-.show-detail { max-width: 900px; }
+.show-detail { max-width: 900px; margin: 0 auto; }
 
 .show-detail__back { margin-bottom: var(--sp-lg); }
 

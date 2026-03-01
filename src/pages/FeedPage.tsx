@@ -21,12 +21,13 @@ export function FeedPage() {
   }, [feedPosts, locationFilter]);
 
   function makeAddComment(postId: string) {
-    return (content: string) => {
+    return (content: string, parentId?: string) => {
       if (!currentUser) return;
       const comment: Comment = {
         id: crypto.randomUUID(),
         authorId: currentUser.id,
         content,
+        parentId,
         createdAt: new Date().toISOString(),
       };
       addCommentToFeedPost(postId, comment);

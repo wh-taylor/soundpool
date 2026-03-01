@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UserAvatar } from './UserAvatar';
@@ -10,16 +11,16 @@ import './FeedPostCard.css';
 interface FeedPostCardProps {
   post: FeedPost;
   onDelete?: () => void;
-  onAddComment?: (content: string) => void;
+  onAddComment?: (content: string, parentId?: string) => void;
 }
 
 export function FeedPostCard({ post, onDelete, onAddComment }: FeedPostCardProps) {
   const { getUserById } = useAuth();
   const author = getUserById(post.authorId);
   const embedUrl = post.videoUrl ? getEmbedUrl(post.videoUrl) : null;
+  const [showComments, setShowComments] = useState(false);
 
   return (
-    /* The .feed-post-card class here triggers the CSS transition and hover */
     <article className="feed-post-card panel">
       <div className="feed-post-card__header">
         <span className="tag tag--post">Post</span>
@@ -61,7 +62,18 @@ export function FeedPostCard({ post, onDelete, onAddComment }: FeedPostCardProps
         </div>
       )}
 
-      <CommentSection comments={post.comments} onAddComment={onAddComment} />
+      <div className="feed-post-card__footer">
+        <button
+          className="feed-post-card__comment-toggle"
+          onClick={() => setShowComments((v) => !v)}
+        >
+          💬 {post.comments.length > 0 ? `${post.comments.length} Comment${post.comments.length !== 1 ? 's' : ''}` : 'Comment'}
+        </button>
+      </div>
+
+      {showComments && (
+        <CommentSection comments={post.comments} onAddComment={onAddComment} />
+      )}
     </article>
   );
 }

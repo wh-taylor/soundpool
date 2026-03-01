@@ -36,12 +36,13 @@ export function ShowDetailPage() {
     }
   }
 
-  function handleAddComment(content: string) {
+  function handleAddComment(content: string, parentId?: string) {
     if (!currentUser || !show) return;
     const comment: Comment = {
       id: crypto.randomUUID(),
       authorId: currentUser.id,
       content,
+      parentId,
       createdAt: new Date().toISOString(),
     };
     addCommentToShow(show.id, comment);

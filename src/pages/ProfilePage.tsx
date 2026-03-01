@@ -26,6 +26,7 @@ export function ProfilePage() {
     feedPosts,
     bands,
     deleteFeedPost,
+    deleteBand,
     addCommentToFeedPost,
     inviteUserToBand,
     acceptBandInvite,
@@ -201,12 +202,13 @@ export function ProfilePage() {
   }
 
   function makeAddComment(postId: string) {
-    return (content: string) => {
+    return (content: string, parentId?: string) => {
       if (!currentUser) return;
       const comment: Comment = {
         id: crypto.randomUUID(),
         authorId: currentUser.id,
         content,
+        parentId,
         createdAt: new Date().toISOString(),
       };
       addCommentToFeedPost(postId, comment);
@@ -441,7 +443,7 @@ export function ProfilePage() {
                 value={jamDesc}
                 onChange={(e) => setJamDesc(e.target.value)}
                 rows={3}
-                placeholder="Describe what you're looking for, your vibe, availability..."
+                placeholder="Describe what you're looking for"
               />
             </div>
             <div className="form-group">
@@ -475,7 +477,7 @@ export function ProfilePage() {
                     className="btn btn--secondary btn--sm"
                     onClick={() => setExpandedBandId(expandedBandId === band.id ? null : band.id)}
                   >
-                    {expandedBandId === band.id ? 'Hide Management' : 'Manage Members'}
+                    {expandedBandId === band.id ? 'Close' : 'Manage Band'}
                   </button>
                 </div>
 
@@ -515,6 +517,20 @@ export function ProfilePage() {
                       </div>
                       {inviteError && <p className="form-error">{inviteError}</p>}
                     </form>
+
+                    <div className="profile-page__band-danger">
+                      <button
+                        className="btn btn--danger btn--sm"
+                        onClick={() => {
+                          if (confirm(`Delete "${band.name}"? This cannot be undone.`)) {
+                            deleteBand(band.id);
+                            setExpandedBandId(null);
+                          }
+                        }}
+                      >
+                        Delete Band
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

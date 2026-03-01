@@ -21,6 +21,7 @@ export interface Comment {
   authorId: string;
   content: string;
   createdAt: string;
+  parentId?: string;
 }
 
 export interface JamEntry {

@@ -15,12 +15,12 @@
   --bg-panel:      #12121e;
   --bg-input:      #1a1a2e;
   --border:        #2a2a3e;
-  --border-hover:  #3a3a5e;
+  --border-hover:  #32324a;
 
-  --accent-1:      #ff6b35;
+  --accent-1:      #b44dff;
   --accent-2:      #00d4ff;
-  --accent-3:      #c8ff00;
-  --accent-4:      #b44dff;
+  --accent-3:      #30e46f;
+  --accent-4:      #ff6b35;
 
   --text-primary:  #e0e0e0;
   --text-muted:    #888899;
@@ -58,8 +58,6 @@ body {
   font-family: var(--font-body);
   color: var(--text-primary);
   background-color: var(--bg-primary);
-  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
-  background-size: 24px 24px;
   min-height: 100vh;
   line-height: 1.6;
 }
@@ -119,17 +117,17 @@ a:hover { color: var(--text-bright); }
   line-height: 1.6;
   white-space: nowrap;
 }
-.tag--jam        { color: #ff6b35; }
+.tag--jam        { color: #b44dff; }
 .tag--band       { color: #00d4ff; }
-.tag--show       { color: #c8ff00; }
+.tag--show       { color: #4de527; }
 .tag--post       { color: #888899; }
-.tag--venue      { color: #b44dff; }
+.tag--venue      { color: #ff6b35; }
 .tag--photo      { color: #ff4d88; }
-.tag--role       { color: #b44dff; }
-.tag--genre      { color: #c8ff00; }
+.tag--role       { color: #ff6b35; }
+.tag--genre      { color: #2ceb29; }
 .tag--instrument { color: #00d4ff; }
 .tag--age        { color: #ff6b35; }
-.tag--accepted   { color: #c8ff00; }
+.tag--accepted   { color: #2ded1f; }
 .tag--pending    { color: #888899; }
 
 .btn {

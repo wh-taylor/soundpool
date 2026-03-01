@@ -53,6 +53,7 @@ export function ProfilePage() {
   // Jam Entry edit state (own profile only)
   const [jamVisible, setJamVisible] = useState(() => currentUser?.jamEntry?.visible ?? false);
   const [jamDesc, setJamDesc] = useState(() => currentUser?.jamEntry?.description ?? '');
+  const [jamYoutubeUrl, setJamYoutubeUrl] = useState(() => currentUser?.jamEntry?.youtubeUrl ?? '');
   const [jamCustomization, setJamCustomization] = useState<Customization>(
     () => currentUser?.jamEntry?.customization ?? {}
   );
@@ -178,7 +179,12 @@ export function ProfilePage() {
   function saveJamEntry() {
     if (!currentUser) return;
     updateUserById(currentUser.id, {
-      jamEntry: { visible: jamVisible, description: jamDesc, customization: jamCustomization },
+      jamEntry: {
+        visible: jamVisible,
+        description: jamDesc,
+        youtubeUrl: jamYoutubeUrl.trim() || undefined,
+        customization: jamCustomization,
+      },
     });
     setJamSaved(true);
     setTimeout(() => setJamSaved(false), 2000);
@@ -436,6 +442,15 @@ export function ProfilePage() {
                 onChange={(e) => setJamDesc(e.target.value)}
                 rows={3}
                 placeholder="Describe what you're looking for, your vibe, availability..."
+              />
+            </div>
+            <div className="form-group">
+              <label>YouTube Link (optional)</label>
+              <input
+                type="url"
+                value={jamYoutubeUrl}
+                onChange={(e) => setJamYoutubeUrl(e.target.value)}
+                placeholder="https://youtube.com/watch?v=..."
               />
             </div>
             <CustomizationPanel value={jamCustomization} onChange={setJamCustomization} />

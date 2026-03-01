@@ -45,6 +45,7 @@ export function CreatePostModal({ onClose }: CreatePostModalProps) {
       id: crypto.randomUUID(),
       authorId: currentUser.id,
       content: content.trim(),
+      location: currentUser.location,
       videoUrl: videoUrl.trim() || undefined,
       imageUrl: imageData || undefined,
       createdAt: new Date().toISOString(),

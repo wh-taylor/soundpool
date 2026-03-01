@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { formatShowDate } from '../utils/dateUtils';
+import { formatShowDate, timeAgo } from '../utils/dateUtils';
 import type { Show } from '../types';
 import './ShowCard.css';
 
@@ -11,13 +11,7 @@ export function ShowCard({ show }: ShowCardProps) {
   return (
     <Link to={`/shows/${show.id}`} className="show-card panel" aria-label={show.title}>
       <div className="show-card__flyer">
-        {show.flyerUrl ? (
-          <img src={show.flyerUrl} alt={show.title} className="show-card__flyer-img" />
-        ) : (
-          <div className="show-card__flyer-placeholder">
-            <span>♪</span>
-          </div>
-        )}
+        <img src={show.flyerUrl} alt={show.title} className="show-card__flyer-img" />
       </div>
       <div className="show-card__info">
         <div className="show-card__badges">
@@ -28,6 +22,7 @@ export function ShowCard({ show }: ShowCardProps) {
         <div className="show-card__date">{formatShowDate(show.date)}</div>
         <div className="show-card__city">{show.city}</div>
         <div className="show-card__venue">@{show.venueInstagram}</div>
+        <div className="show-card__posted">Posted {timeAgo(show.createdAt)}</div>
       </div>
     </Link>
   );

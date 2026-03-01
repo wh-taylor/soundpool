@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
 import { UserAvatar } from '../components/UserAvatar';
 import { compressImage } from '../utils/imageUtils';
 import { timeAgo } from '../utils/dateUtils';
 import { Link } from 'react-router-dom';
+import { CITIES } from '../data/cities';
 import type { PhotographerPost } from '../types';
 import './PhotographersPage.css';
 
@@ -12,11 +13,20 @@ export function PhotographersPage() {
   const { currentUser, getUserById } = useAuth();
   const { photographerPosts, addPhotographerPost } = useApp();
   const [modalOpen, setModalOpen] = useState(false);
+  const [locationFilter, setLocationFilter] = useState(currentUser?.location ?? '');
 
   const [description, setDescription] = useState('');
   const [lookingForBands, setLookingForBands] = useState(false);
   const [images, setImages] = useState<string[]>([]);
   const [error, setError] = useState('');
+
+  const filtered = useMemo(() => {
+    if (!locationFilter) return photographerPosts;
+    return photographerPosts.filter((post) => {
+      const author = getUserById(post.authorId);
+      return author?.location === locationFilter;
+    });
+  }, [photographerPosts, locationFilter, getUserById]);
 
   async function handleImages(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []).slice(0, 6);
@@ -52,11 +62,36 @@ export function PhotographersPage() {
         Photographers posting their work and looking for bands to shoot.
       </p>
 
-      {photographerPosts.length === 0 ? (
-        <div className="empty-state">No photographer posts yet.</div>
+      <div className="page-filters">
+        <select
+          className="page-filter-select"
+          value={locationFilter}
+          onChange={(e) => setLocationFilter(e.target.value)}
+        >
+          <option value="">All Locations</option>
+          {CITIES.map((c) => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+        {locationFilter && locationFilter !== currentUser?.location && (
+          <button className="btn btn--secondary btn--sm" onClick={() => setLocationFilter(currentUser?.location ?? '')}>
+            My City
+          </button>
+        )}
+        {locationFilter && (
+          <button className="btn btn--secondary btn--sm" onClick={() => setLocationFilter('')}>
+            Clear
+          </button>
+        )}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="empty-state">
+          {locationFilter ? `No photographers in ${locationFilter} yet.` : 'No photographer posts yet.'}
+        </div>
       ) : (
         <div className="photos-page__grid">
-          {photographerPosts.map((post) => {
+          {filtered.map((post) => {
             const author = getUserById(post.authorId);
             return (
               <div key={post.id} className="photo-card panel">
@@ -74,9 +109,12 @@ export function PhotographersPage() {
                   {author && (
                     <div className="photo-card__author">
                       <UserAvatar user={author} size="sm" />
-                      <Link to={`/profile/${author.username}`} className="photo-card__username">
-                        {author.username}
-                      </Link>
+                      <div>
+                        <Link to={`/profile/${author.username}`} className="photo-card__username">
+                          {author.username}
+                        </Link>
+                        <div className="photo-card__location">{author.location}</div>
+                      </div>
                     </div>
                   )}
 

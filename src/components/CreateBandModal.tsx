@@ -67,6 +67,7 @@ export function CreateBandModal({ onClose }: CreateBandModalProps) {
       genres,
       description: description.trim(),
       imageUrl: imageData,
+      gifUrl: '',
       adminId: currentUser.id,
       members: [{ userId: currentUser.id, status: 'accepted' }],
       audioUrl: audioUrl.trim() || undefined,

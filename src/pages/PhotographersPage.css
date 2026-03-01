@@ -56,8 +56,16 @@
   letter-spacing: 0.08em;
   color: var(--accent-2);
   text-decoration: none;
+  display: block;
 }
 .photo-card__username:hover { color: var(--text-bright); }
+
+.photo-card__location {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
 
 .photo-card__desc { font-size: 0.875rem; color: var(--text-primary); line-height: 1.5; }
 

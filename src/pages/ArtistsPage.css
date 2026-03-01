@@ -19,9 +19,29 @@
 
 .artist-card__body { padding: var(--sp-md); display: flex; flex-direction: column; gap: var(--sp-sm); }
 
-.artist-card__header { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-sm); }
+.artist-card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
 
-.artist-card__name { font-size: 1rem; letter-spacing: 0.05em; }
+.artist-card__username {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-1);
+  text-decoration: none;
+  display: block;
+}
+.artist-card__username:hover { color: var(--text-bright); }
+
+.artist-card__location {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
 
 .artist-card__meta {
   display: flex;
@@ -37,8 +57,15 @@
 
 .artist-card__link { color: var(--accent-2); text-decoration: none; }
 .artist-card__link:hover { color: var(--text-bright); }
-.artist-card__link--spotify { color: var(--accent-3); }
+.artist-card__link--website { color: var(--accent-3); }
 
 .artist-card__genres { display: flex; flex-wrap: wrap; gap: var(--sp-xs); }
 
 .artist-card__desc { font-size: 0.875rem; color: var(--text-primary); line-height: 1.5; }
+
+.artist-card__time {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}

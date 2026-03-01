@@ -7,5 +7,5 @@ export const STORAGE_KEYS = {
   VENUE_POSTS: 'sp_venue_posts',
   PHOTOGRAPHER_POSTS: 'sp_photographer_posts',
   ARTIST_POSTS: 'sp_artist_posts',
-  SEED_DONE: 'sp_seed_done',
+  SEED_DONE: 'sp_seed_done_v3',
 } as const;

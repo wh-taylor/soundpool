@@ -8,10 +8,17 @@ interface JamCardProps {
   user: User;
 }
 
+function getYouTubeId(url: string): string | null {
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+  return match ? match[1] : null;
+}
+
 export function JamCard({ user }: JamCardProps) {
   const accentColor = user.jamEntry?.customization?.accentColor ?? 'var(--accent-1)';
   const fontFamily = user.jamEntry?.customization?.fontFamily;
   const fontStack = FONT_OPTIONS.find((f) => f.value === fontFamily)?.stack ?? 'inherit';
+  const youtubeUrl = user.jamEntry?.youtubeUrl;
+  const youtubeId = youtubeUrl ? getYouTubeId(youtubeUrl) : null;
 
   const customStyle = {
     '--card-accent': accentColor,
@@ -45,6 +52,18 @@ export function JamCard({ user }: JamCardProps) {
 
       {user.jamEntry?.description && (
         <p className="jam-card__description">{user.jamEntry.description}</p>
+      )}
+
+      {youtubeId && (
+        <div className="jam-card__youtube">
+          <iframe
+            src={`https://www.youtube.com/embed/${youtubeId}`}
+            title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="jam-card__youtube-iframe"
+          />
+        </div>
       )}
 
       <div className="jam-card__tags">

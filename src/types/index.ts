@@ -26,6 +26,7 @@ export interface Comment {
 export interface JamEntry {
   visible: boolean;
   description: string;
+  youtubeUrl?: string;
   customization?: Customization;
 }
 
@@ -55,6 +56,7 @@ export interface FeedPost {
   id: string;
   authorId: string;
   content: string;
+  location: string;
   videoUrl?: string;
   imageUrl?: string;
   comments: Comment[];
@@ -73,6 +75,7 @@ export interface Band {
   genres: string[];
   description: string;
   imageUrl: string;
+  gifUrl: string;
   adminId: string;
   members: BandMember[];
   audioUrl?: string;
@@ -84,7 +87,7 @@ export interface Band {
 export interface Show {
   id: string;
   title: string;
-  flyerUrl?: string;
+  flyerUrl: string;
   date: string;
   city: string;
   address: string | null;
@@ -118,8 +121,8 @@ export interface PhotographerPost {
 export interface ArtistPost {
   id: string;
   authorId: string;
-  artistName: string;
-  city: string;
+  artistName?: string;
+  city?: string;
   mediums: string[];
   description: string;
   imageUrl?: string;
@@ -129,6 +132,4 @@ export interface ArtistPost {
 }
 
 export type UnifiedFeedItem =
-  | { type: 'post'; createdAt: string; data: FeedPost }
-  | { type: 'band'; createdAt: string; data: Band }
-  | { type: 'show'; createdAt: string; data: Show };
+  | { type: 'post'; createdAt: string; data: FeedPost };

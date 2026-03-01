@@ -41,11 +41,12 @@ export function CreateShowModal({ onClose }: CreateShowModalProps) {
     if (!date) { setError('Date is required.'); return; }
     if (!city) { setError('City is required.'); return; }
     if (!venueInstagram.trim()) { setError('Venue Instagram is required.'); return; }
+    if (!flyerData) { setError('Flyer image is required.'); return; }
 
     const show: Show = {
       id: crypto.randomUUID(),
       title: title.trim(),
-      flyerUrl: flyerData || undefined,
+      flyerUrl: flyerData,
       date,
       city,
       address: dmForAddress ? null : (address.trim() || null),
@@ -117,7 +118,7 @@ export function CreateShowModal({ onClose }: CreateShowModalProps) {
             </div>
           </div>
           <div className="form-group">
-            <label>Flyer Image (optional)</label>
+            <label>Flyer Image *</label>
             {flyerPreview && <img src={flyerPreview} alt="" style={{ width: '100%', maxHeight: 200, objectFit: 'contain', marginBottom: 8, background: 'var(--bg-input)' }} />}
             <input type="file" accept="image/*" onChange={handleFlyer} />
           </div>

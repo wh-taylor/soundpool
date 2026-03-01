@@ -1,5 +1,5 @@
 .feed-page__composer {
-  margin-bottom: var(--sp-xl);
+  margin-bottom: var(--sp-md);
 }
 
 .feed-page__compose-btn {
@@ -24,16 +24,25 @@
   flex: 1;
 }
 
+.feed-page__filters {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-xl);
+}
+
+.feed-page__filter-select {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: var(--sp-xs) var(--sp-sm);
+  letter-spacing: 0.05em;
+}
+
 .feed-page__list {
   display: flex;
   flex-direction: column;
   gap: var(--sp-md);
-}
-
-.feed-page__jam-wrapper {
-  max-width: 480px;
-}
-
-.feed-page__show-wrapper {
-  max-width: 320px;
 }

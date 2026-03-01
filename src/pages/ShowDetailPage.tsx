@@ -57,13 +57,7 @@ export function ShowDetailPage() {
         <div className="show-detail__layout">
           {/* Flyer */}
           <div className="show-detail__flyer-col">
-            {show.flyerUrl ? (
-              <img src={show.flyerUrl} alt={show.title} className="show-detail__flyer" />
-            ) : (
-              <div className="show-detail__flyer-placeholder">
-                <span className="show-detail__flyer-icon">♪</span>
-              </div>
-            )}
+            <img src={show.flyerUrl} alt={show.title} className="show-detail__flyer" />
           </div>
 
           {/* Info */}

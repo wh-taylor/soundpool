@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
 import { compressImage } from '../utils/imageUtils';
@@ -11,6 +11,7 @@ export function VenuesPage() {
   const { currentUser } = useAuth();
   const { venuePosts, addVenuePost } = useApp();
   const [modalOpen, setModalOpen] = useState(false);
+  const [locationFilter, setLocationFilter] = useState(currentUser?.location ?? '');
 
   const [venueName, setVenueName] = useState('');
   const [city, setCity] = useState('');
@@ -19,6 +20,11 @@ export function VenuesPage() {
   const [imageData, setImageData] = useState('');
   const [imagePreview, setImagePreview] = useState('');
   const [error, setError] = useState('');
+
+  const filtered = useMemo(() => {
+    if (!locationFilter) return venuePosts;
+    return venuePosts.filter((v) => v.city === locationFilter);
+  }, [venuePosts, locationFilter]);
 
   async function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -35,12 +41,23 @@ export function VenuesPage() {
     if (!city) { setError('City is required.'); return; }
     if (!description.trim()) { setError('Description is required.'); return; }
 
+    const handle = instagram.trim().replace(/^@/, '').toLowerCase();
+    if (handle) {
+      const duplicate = venuePosts.some(
+        (v) => v.instagram?.toLowerCase() === handle
+      );
+      if (duplicate) {
+        setError('A venue with this Instagram handle already exists.');
+        return;
+      }
+    }
+
     const post: VenuePost = {
       id: crypto.randomUUID(),
       authorId: currentUser.id,
       venueName: venueName.trim(),
       city,
-      instagram: instagram.trim() || undefined,
+      instagram: handle || undefined,
       description: description.trim(),
       imageUrl: imageData || undefined,
       createdAt: new Date().toISOString(),
@@ -58,11 +75,36 @@ export function VenuesPage() {
       </div>
       <p className="venues-page__sub">Venues looking for artists, and spaces available for shows.</p>
 
-      {venuePosts.length === 0 ? (
-        <div className="empty-state">No venues listed yet.</div>
+      <div className="page-filters">
+        <select
+          className="page-filter-select"
+          value={locationFilter}
+          onChange={(e) => setLocationFilter(e.target.value)}
+        >
+          <option value="">All Locations</option>
+          {CITIES.map((c) => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+        {locationFilter && locationFilter !== currentUser?.location && (
+          <button className="btn btn--secondary btn--sm" onClick={() => setLocationFilter(currentUser?.location ?? '')}>
+            My City
+          </button>
+        )}
+        {locationFilter && (
+          <button className="btn btn--secondary btn--sm" onClick={() => setLocationFilter('')}>
+            Clear
+          </button>
+        )}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="empty-state">
+          {locationFilter ? `No venues in ${locationFilter} yet.` : 'No venues listed yet.'}
+        </div>
       ) : (
         <div className="venues-page__list">
-          {venuePosts.map((v) => (
+          {filtered.map((v) => (
             <div key={v.id} className="venue-card panel">
               {v.imageUrl && <img src={v.imageUrl} alt={v.venueName} className="venue-card__image" />}
               <div className="venue-card__body">

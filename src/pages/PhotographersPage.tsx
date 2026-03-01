@@ -73,7 +73,7 @@ export function PhotographersPage() {
             <option key={c} value={c}>{c}</option>
           ))}
         </select>
-        {locationFilter && locationFilter !== currentUser?.location && (
+        {(!locationFilter || locationFilter !== currentUser?.location) && (
           <button className="btn btn--secondary btn--sm" onClick={() => setLocationFilter(currentUser?.location ?? '')}>
             My City
           </button>

@@ -52,14 +52,14 @@ export function BandsPage() {
             <option key={c} value={c}>{c}</option>
           ))}
         </select>
-        {locationFilter && locationFilter !== currentUser?.location && (
+        {(!locationFilter || locationFilter !== currentUser?.location) && (
           <button className="btn btn--secondary btn--sm" onClick={() => setLocationFilter(currentUser?.location ?? '')}>
             My City
           </button>
         )}
         {locationFilter && (
           <button className="btn btn--secondary btn--sm" onClick={() => setLocationFilter('')}>
-            Clear Location
+            Clear
           </button>
         )}
       </div>

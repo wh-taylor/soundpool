@@ -19,6 +19,7 @@ export function CreatePostModal({ onClose }: CreatePostModalProps) {
   const [error, setError] = useState('');
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    setError('');
     const file = e.target.files?.[0];
     if (!file) return;
     try {
@@ -31,6 +32,7 @@ export function CreatePostModal({ onClose }: CreatePostModalProps) {
   }
 
   function handleSubmit(e: React.FormEvent) {
+    setError('');
     e.preventDefault();
     if (!currentUser) return;
     if (!content.trim()) { setError('Add some text to your post.'); return; }
@@ -46,6 +48,7 @@ export function CreatePostModal({ onClose }: CreatePostModalProps) {
       videoUrl: videoUrl.trim() || undefined,
       imageUrl: imageData || undefined,
       createdAt: new Date().toISOString(),
+      comments: [],
     };
     addFeedPost(post);
     onClose();

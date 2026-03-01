@@ -25,6 +25,7 @@ export const CITIES: string[] = [
   'Milwaukee, WI',
   'Minneapolis, MN',
   'Nashville, TN',
+  'Newark, DE',
   'New Orleans, LA',
   'New York, NY',
   'Oakland, CA',

@@ -11,7 +11,7 @@ interface CommentSectionProps {
   onAddComment?: (content: string) => void;
 }
 
-export function CommentSection({ comments, onAddComment }: CommentSectionProps) {
+export function CommentSection({ comments = [], onAddComment }: CommentSectionProps) {
   const { currentUser, getUserById } = useAuth();
   const [text, setText] = useState('');
 
